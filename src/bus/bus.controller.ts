@@ -3,16 +3,20 @@ import { BusService } from './bus.service';
 import { CreateBusDto } from './dto/create-bus.dto';
 import { UpdateBusDto } from './dto/update-bus.dto';
 import { ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from 'src/auth/auth.guard';
-
+import { AuthGuard } from 'src/auth/guard/auth.guard';
+import { RolesGuard } from 'src/auth/guard/roles.guard';
+import { Role } from 'src/auth/enum/role.enum';
+import { Roles } from 'src/auth/decorator/roles.decorator';
 
 @ApiTags('Bus')
 @Controller('bus')
 export class BusController {
   constructor(private readonly busService: BusService) {}
 
-  @UseGuards(AuthGuard)
+ 
   @Post()
+  @UseGuards(AuthGuard,RolesGuard)
+  @Roles(Role.ENTERPRISE)
   create(@Body() createBusDto: CreateBusDto) {
     return this.busService.create(createBusDto);
   }

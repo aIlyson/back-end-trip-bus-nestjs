@@ -1,4 +1,4 @@
-import { HttpException, HttpStatus, Inject, Injectable } from '@nestjs/common';
+import { HttpException, HttpStatus, Inject, Injectable, Post, UseGuards } from '@nestjs/common';
 import { CreateBusDto } from './dto/create-bus.dto';
 import { UpdateBusDto } from './dto/update-bus.dto';
 import { Repository } from 'typeorm';
@@ -12,7 +12,9 @@ export class BusService {
     private readonly busRepository: Repository<Bus>
   ) { }
 
+
   async create(createBusDto: CreateBusDto) {
+    console.log('rodei filho')
     const bus = new Bus()
     bus.seat = createBusDto.seat
     return await this.busRepository.save(bus)
@@ -29,7 +31,7 @@ export class BusService {
   async update(id: number, updateBusDto: UpdateBusDto) {
     const busFound = await this.busRepository.findOneBy({ id })
 
-    if(!busFound){
+    if (!busFound) {
       throw new HttpException('Bus not found', HttpStatus.NOT_FOUND)
     }
 

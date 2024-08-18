@@ -41,7 +41,7 @@ export class UserService {
         user.name = createUserDto.name
         user.email = createUserDto.email
         user.password = createUserDto.password
-        user.role = createUserDto.role
+        user.roles = createUserDto.roles
         return user
     }
 
