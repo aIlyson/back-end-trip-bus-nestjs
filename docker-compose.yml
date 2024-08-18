@@ -4,7 +4,7 @@ services:
     image: mysql:latest
     restart: always
     environment:
-      MYSQL_DATABASE: 'trip-bus'
+      MYSQL_DATABASE: 'trip_bus'
       MYSQL_USER: 'vzincoder'
       MYSQL_PASSWORD: '12345678'
       MYSQL_ROOT_PASSWORD: '12345678'
