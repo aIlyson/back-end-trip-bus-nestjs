@@ -1,27 +1,28 @@
-import { Column, PrimaryGeneratedColumn } from "typeorm"
+import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
 
 export enum Role {
     USER = 'USER',
-    ENTERPRICE = 'ENTERPRICE'
+    ENTERPRISE = 'ENTERPRISE' 
 }
 
+@Entity()
 export class User {
     @PrimaryGeneratedColumn()
-    id: number
+    id: number;
 
     @Column()
-    name: string
+    name: string;
 
-    @Column({unique:true})
-    email: string
+    @Column({ unique: true })
+    email: string;
 
     @Column()
-    password: string
+    password: string;
 
     @Column({
         type: 'enum',
         enum: Role,
         default: Role.USER
     })
-    roles: Role[]
+    role: Role;
 }

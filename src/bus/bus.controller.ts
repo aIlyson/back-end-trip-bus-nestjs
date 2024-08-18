@@ -1,8 +1,9 @@
-import { Controller, Get, Post, Body, Param, Delete, Put } from '@nestjs/common';
+import { Controller, Get, Post, Body, Param, Delete, Put, UseGuards } from '@nestjs/common';
 import { BusService } from './bus.service';
 import { CreateBusDto } from './dto/create-bus.dto';
 import { UpdateBusDto } from './dto/update-bus.dto';
 import { ApiTags } from '@nestjs/swagger';
+import { AuthGuard } from 'src/auth/auth.guard';
 
 
 @ApiTags('Bus')
@@ -10,6 +11,7 @@ import { ApiTags } from '@nestjs/swagger';
 export class BusController {
   constructor(private readonly busService: BusService) {}
 
+  @UseGuards(AuthGuard)
   @Post()
   create(@Body() createBusDto: CreateBusDto) {
     return this.busService.create(createBusDto);
