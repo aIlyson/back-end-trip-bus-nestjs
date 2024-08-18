@@ -11,6 +11,7 @@ export const databaseProviders = [
         username: 'root',
         password: '12345678',
         database: 'trip_bus',
+        dropSchema:true,
         entities: [
             __dirname + '/../**/*.entity{.ts,.js}',
         ],
