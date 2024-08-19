@@ -1,6 +1,7 @@
-import { Entity, Column, PrimaryGeneratedColumn } from "typeorm";
+import { Entity, Column, PrimaryGeneratedColumn, OneToMany } from "typeorm";
 
 import { Role } from "src/auth/enum/role.enum";
+import { Bus } from "src/bus/entities/bus.entity";
 
 @Entity()
 export class User {
@@ -21,5 +22,8 @@ export class User {
         enum: Role,
         default: Role.USER
     })
-    roles: Role[];
+    role: Role;
+
+    @OneToMany(()=> Bus,(bus)=> bus.user)
+    bus: Bus[]
 }

@@ -4,5 +4,5 @@ export class CreateResponseUserDto {
     id:number
     name:string
     email:string
-    roles:Role[]
+    role:Role
 }
