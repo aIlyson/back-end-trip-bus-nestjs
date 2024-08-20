@@ -3,6 +3,8 @@ import { CreateBusDto } from './dto/create-bus.dto';
 import { UpdateBusDto } from './dto/update-bus.dto';
 import { Repository } from 'typeorm';
 import { Bus } from './entities/bus.entity';
+import { CreateResponseUserDto } from 'src/user/dto/create-response-user.dto';
+import { User } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class BusService {
@@ -13,11 +15,11 @@ export class BusService {
   ) { }
 
 
-  async create(createBusDto: CreateBusDto) {
-    console.log('rodei filho')
-    const bus = new Bus()
-    bus.seat = createBusDto.seat
-    return await this.busRepository.save(bus)
+  async create(createBusDto: CreateBusDto, user: User) {
+    const bus = this.busRepository.create(createBusDto)
+    bus.user = user
+    const { user : removedUser , ...busCreated } = await this.busRepository.save(bus)
+    return busCreated
   }
 
   findAll() {
@@ -35,7 +37,9 @@ export class BusService {
       throw new HttpException('Bus not found', HttpStatus.NOT_FOUND)
     }
 
+    busFound.category = updateBusDto.category
     busFound.seat = updateBusDto.seat
+    
     return await this.busRepository.save(busFound)
   }
 

@@ -13,8 +13,8 @@ export class UserService {
         private readonly userRepository: Repository<User>
     ) { }
 
-    async findOne(email: string) {
-        return await this.userRepository.findOneBy({ email })
+    async findOne(criteria: Partial<{ id: number; email: string }>) {
+        return await this.userRepository.findOneBy(criteria)
     }
 
     async create(createUserDto: CreateUserDto): Promise<CreateResponseUserDto> {
@@ -28,7 +28,7 @@ export class UserService {
         }
 
         const newUser = this.convertCreateUserDtoToUser(createUserDto)
-        const hashedPassword = hashSync(newUser.password,10)
+        const hashedPassword = hashSync(newUser.password, 10)
         newUser.password = hashedPassword
         const newUserCreated = await this.userRepository.save(newUser)
 
