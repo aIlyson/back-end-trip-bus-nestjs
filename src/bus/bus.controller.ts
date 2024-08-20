@@ -7,7 +7,9 @@ import { AuthGuard } from 'src/auth/guard/auth.guard';
 import { RolesGuard } from 'src/auth/guard/roles.guard';
 import { Role } from 'src/auth/enum/role.enum';
 import { Roles } from 'src/auth/decorator/roles.decorator';
-import { User } from 'src/user/entities/user.entity';
+import { User } from 'src/user/decorator/user.decorator';
+import { UserEntity } from 'src/user/entities/user.entity';
+
 
 @ApiTags('Bus')
 @Controller('bus')
@@ -18,8 +20,7 @@ export class BusController {
 
  
   @Post()
-  create(@Body() createBusDto: CreateBusDto,@Req() req:any) {
-    const user = req.user as User
+  create(@Body() createBusDto: CreateBusDto,@User() user:UserEntity) {
     return this.busService.create(createBusDto,user);
   }
 

@@ -1,10 +1,10 @@
 import { DataSource} from 'typeorm';
-import { Bus } from './entities/bus.entity';
+import { BusEntity } from './entities/bus.entity';
 
 export const busProviders = [
   {
     provide: 'BUS_REPOSITORY',
-    useFactory: (dataSource: DataSource) => dataSource.getRepository(Bus),
+    useFactory: (dataSource: DataSource) => dataSource.getRepository(BusEntity),
     inject: ['DATABASE_SOURCE'],
   },
 ];

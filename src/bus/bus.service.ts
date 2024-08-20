@@ -2,20 +2,19 @@ import { HttpException, HttpStatus, Inject, Injectable, Post, UseGuards } from '
 import { CreateBusDto } from './dto/create-bus.dto';
 import { UpdateBusDto } from './dto/update-bus.dto';
 import { Repository } from 'typeorm';
-import { Bus } from './entities/bus.entity';
-import { CreateResponseUserDto } from 'src/user/dto/create-response-user.dto';
-import { User } from 'src/user/entities/user.entity';
+import { BusEntity } from './entities/bus.entity';
+import { UserEntity } from 'src/user/entities/user.entity';
 
 @Injectable()
 export class BusService {
 
   constructor(
     @Inject('BUS_REPOSITORY')
-    private readonly busRepository: Repository<Bus>
+    private readonly busRepository: Repository<BusEntity>
   ) { }
 
 
-  async create(createBusDto: CreateBusDto, user: User) {
+  async create(createBusDto: CreateBusDto, user: UserEntity) {
     const bus = this.busRepository.create(createBusDto)
     bus.user = user
     const { user : removedUser , ...busCreated } = await this.busRepository.save(bus)
@@ -39,7 +38,7 @@ export class BusService {
 
     busFound.category = updateBusDto.category
     busFound.seat = updateBusDto.seat
-    
+
     return await this.busRepository.save(busFound)
   }
 

@@ -1,6 +1,6 @@
 import { ConflictException, Inject, Injectable } from '@nestjs/common';
 import { Repository } from 'typeorm';
-import { User } from './entities/user.entity';
+import { UserEntity } from './entities/user.entity';
 import { CreateUserDto } from './dto/create-user.dto';
 import { CreateResponseUserDto } from './dto/create-response-user.dto';
 import { hashSync } from 'bcrypt';
@@ -10,7 +10,7 @@ export class UserService {
 
     constructor(
         @Inject('USER_REPOSITORY')
-        private readonly userRepository: Repository<User>
+        private readonly userRepository: Repository<UserEntity>
     ) { }
 
     async findOne(criteria: Partial<{ id: number; email: string }>) {
@@ -27,7 +27,7 @@ export class UserService {
             )
         }
 
-        const newUser = this.convertCreateUserDtoToUser(createUserDto)
+        const newUser = this.userRepository.create(createUserDto)
         const hashedPassword = hashSync(newUser.password, 10)
         newUser.password = hashedPassword
         const newUserCreated = await this.userRepository.save(newUser)
@@ -36,13 +36,5 @@ export class UserService {
         return atributes
     }
 
-    private convertCreateUserDtoToUser(createUserDto: CreateUserDto) {
-        const user = new User()
-        user.name = createUserDto.name
-        user.email = createUserDto.email
-        user.password = createUserDto.password
-        user.role = createUserDto.role
-        return user
-    }
-
+ 
 }

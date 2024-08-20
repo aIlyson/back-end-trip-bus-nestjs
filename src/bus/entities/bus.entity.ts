@@ -1,4 +1,4 @@
-import { User } from 'src/user/entities/user.entity';
+import { UserEntity } from 'src/user/entities/user.entity';
 import { Entity, Column, PrimaryGeneratedColumn, ManyToOne } from 'typeorm';
 
 export enum BusCategory{
@@ -7,8 +7,8 @@ export enum BusCategory{
     SLEEPER = 'SLEEPER'
 }
 
-@Entity()
-export class Bus {
+@Entity('bus')
+export class BusEntity {
     @PrimaryGeneratedColumn()
     id:number
     
@@ -22,7 +22,7 @@ export class Bus {
     })
     category:BusCategory
 
-    @ManyToOne(()=> User,(user)=>user.bus)
-    user:User
+    @ManyToOne(()=> UserEntity,(user)=>user.bus)
+    user:UserEntity
 
 }
