@@ -1,3 +1,4 @@
+// module.type
 import { Module } from '@nestjs/common';
 import { BusModule } from './bus/bus.module';
 import { UserModule } from './user/user.module';
